@@ -19,10 +19,23 @@ public class Sorting {
 	{
 		// todo - noah
 	}
-	
-	public static void selectionSort(Comparable<Integer> a[])
-	{
-		// todo - emma
+
+	public boolean selectionSort(Comparable[] a) {
+	    for (int endOfArrayIndex = a.length - 1; endOfArrayIndex > 0; endOfArrayIndex--) {
+	        Comparable max = a[0];
+	        int maxIndex = 0;
+
+	        for (int i = 1; i <= endOfArrayIndex; i++) {
+	            if (a[i].compareTo(max) > 0) { 
+	                max = a[i];
+	                maxIndex = i;
+	            }
+	        }
+	        Comparable temp = a[maxIndex];
+	        a[maxIndex] = a[endOfArrayIndex];
+	        a[endOfArrayIndex] = temp;
+	    }
+	    return true;
 	}
 	
 	private static void generate()
