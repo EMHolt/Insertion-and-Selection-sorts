@@ -21,7 +21,7 @@ public class Sorting {
 	
 	public static void print(List a, Comparable b[], String msg) throws Exception
 	{
-		String output = msg + "\n" + listString(a) + "\n" 
+		String output = msg + "\n\n" + listString(a) + "\n\n" 
 					  + arrayString(b) + "\n";
 		System.out.println(output);
 		String fileName = "data.txt";
@@ -46,7 +46,7 @@ public class Sorting {
 		}
 	}
 	
-	public static void insertionSort(List<Integer> a)
+	public static void insertionSort(List<Integer> a) // Noah
 	{
 		for (int i = 1; i < a.size(); i++)
 		{
@@ -69,13 +69,17 @@ public class Sorting {
 		}
 	}
 
-	public static void selectionSort(Comparable[] a) {
-	    for (int endOfArrayIndex = a.length - 1; endOfArrayIndex > 0; endOfArrayIndex--) {
+	public static void selectionSort(Comparable[] a) // Emma
+	{
+	    for (int endOfArrayIndex = a.length - 1; endOfArrayIndex > 0; endOfArrayIndex--) 
+	    {
 	        Comparable max = a[0];
 	        int maxIndex = 0;
 
-	        for (int i = 1; i <= endOfArrayIndex; i++) {
-	            if (a[i].compareTo(max) > 0) { 
+	        for (int i = 1; i <= endOfArrayIndex; i++) 
+		{
+	            if (a[i].compareTo(max) > 0) 
+		    { 
 	                max = a[i];
 	                maxIndex = i;
 	            }
