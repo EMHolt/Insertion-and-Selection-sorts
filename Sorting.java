@@ -44,7 +44,6 @@ public class Sorting {
 		{
 			System.out.println(e.toString());
 		}
-		System.out.println(listString(myList));
 	}
 	
 	public static void insertionSort(List<Integer> a)
