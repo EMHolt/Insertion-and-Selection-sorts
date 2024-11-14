@@ -6,7 +6,7 @@ import java.io.FileWriter;
 
 /**
  * @author Noah Buster, Emma Holt
- * Date: 12November2024
+ * Date: 12 November 2024
  * Class: AP CSA 3rd Hour
  * Description: This class takes a List or array with 100 random integers and
  * 				sorts them least to greatest by an insertion sort and 
@@ -19,17 +19,10 @@ public class Sorting {
 	private static Integer[] myArray;
 	private static final int N = 100;
 	
-	public static void print(List a, Comparable b[], String msg) throws Exception
-	{
-		String output = msg + "\n\n" + listString(a) + "\n\n" 
-					  + arrayString(b) + "\n";
-		System.out.println(output);
-		String fileName = "data.txt";
-		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-		out.write(output);
-		out.close();
-	}
-	
+	/**
+	 * Main runs the sorts methods and puts them into a file.
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		generate();
@@ -46,6 +39,10 @@ public class Sorting {
 		}
 	}
 	
+	/**
+	 * Sorts a List of Integers from least to greatest.
+	 * Precondition: the List has Integers stored in it.
+	 */
 	public static void insertionSort(List<Integer> a) // Noah
 	{
 		for (int i = 1; i < a.size(); i++)
@@ -68,7 +65,11 @@ public class Sorting {
 			}
 		}
 	}
-
+	
+	/**
+	 * Sorts an array of Comparables from least to greatest.
+	 * Precondition: the array has Integers stored in it.
+	 */
 	public static void selectionSort(Comparable[] a) // Emma
 	{
 	    for (int endOfArrayIndex = a.length - 1; endOfArrayIndex > 0; endOfArrayIndex--) 
@@ -90,6 +91,9 @@ public class Sorting {
 	    }
 	}
 	
+	/**
+	 * creates a List and array of N Integers
+	 */
 	private static void generate()
 	{
 		myList = new ArrayList<Integer>(N);
@@ -104,6 +108,11 @@ public class Sorting {
 		}
 	}
 	
+	/**
+	 * Creates formatted string of all elements from array a
+	 * @param a
+	 * @return
+	 */
 	private static String arrayString(Object[] a)
 	{
 		String result = "";
@@ -126,6 +135,11 @@ public class Sorting {
 		return result;
 	}
 	
+	/**
+	 * Creates formatted string of all elements from list a
+	 * @param a
+	 * @return
+	 */
 	private static String listString(List a)
 	{
 		String result = "";
@@ -147,4 +161,18 @@ public class Sorting {
 		}
 		return result;
 	}
-}
+
+	/**
+	 * Prints String msg and all elements of list and array
+	 */
+	public static void print(List a, Comparable b[], String msg) throws Exception
+	{
+		String output = msg + "\n\n" + listString(a) + "\n\n" 
+					  + arrayString(b) + "\n";
+		System.out.println(output);
+		String fileName = "data.txt";
+		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+		out.write(output);
+		out.close();
+	}
+	
