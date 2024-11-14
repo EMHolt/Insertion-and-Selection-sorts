@@ -1,8 +1,8 @@
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 /**
  * @author Noah Buster, Emma Holt
@@ -12,52 +12,65 @@ import java.util.Random;
  * 				sorts them least to greatest by an insertion sort and 
  * 				a selection sort. 
  */
+
 public class Sorting {
 	
 	private static List<Integer> myList;
 	private static Integer[] myArray;
 	private static final int N = 100;
 	
-	/**
-	 * Main runs the sorts methods and puts them into a file.
-	 * @param args
-	 */
+	public static void print(List a, Comparable b[], String msg) throws Exception
+	{
+		String output = msg + "\n" + listString(a) + "\n" 
+					  + arrayString(b) + "\n";
+		System.out.println(output);
+		String fileName = "data.txt";
+		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+		out.write(output);
+		out.close();
+	}
+	
 	public static void main(String[] args)
 	{
-		Sorting sorter = new Sorting();
-		try {
-			generate();
-			print(myList, myArray, "Original List and Array:");
-			sorter.selectionSort(myArray);
-			print(myList, myArray, "Sorted List and Array:");
-						
-		} catch (Exception e) {
-			e.printStackTrace();
+		generate();
+		try
+		{
+			print(myList, myArray, "unsorted random arrays");
+			insertionSort(myList);
+			selectionSort(myArray);
+			print(myList, myArray, "sorted random arrays");
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		System.out.println(listString(myList));
+	}
+	
+	public static void insertionSort(List<Integer> a)
+	{
+		for (int i = 1; i < a.size(); i++)
+		{
+			Integer current = a.get(i);
+			int j = 0;
+			while (j < i)
+			{
+				if (current.compareTo(a.get(j)) < 0)
+				{
+					
+					for (int k = i; k > j; k--)
+					{
+						a.set(k, a.get(k-1));
+					}
+					a.set(j, current);
+					break;
+				}
+				j++;
+			}
 		}
 	}
 
-	/**
-	 * Sorts a List of Integers from least to greatest.
-	 * Precondition: the List has Integers stored in it.
-	 */
-	public static void insertionSort(List<Integer> a) {
-	    for (int currentSortedIndex = 1; currentSortedIndex < a.size(); currentSortedIndex++) {
-	        int nextElement = a.get(currentSortedIndex);
-	        int compareI = currentSortedIndex - 1;
-
-	        while (compareI >= 0 && a.get(compareI) > nextElement) {
-	            a.set(compareI + 1, a.get(compareI));
-	            compareI--;
-	        }
-	        a.set(compareI + 1, nextElement);
-	    }
-	}
-
-	/**
-	 * Sorts an array of Integers from least to greatest.
-	 * Precondition: the array has Integers stored in it.
-	 */
-	public boolean selectionSort(Comparable[] a) {
+	public static void selectionSort(Comparable[] a) {
 	    for (int endOfArrayIndex = a.length - 1; endOfArrayIndex > 0; endOfArrayIndex--) {
 	        Comparable max = a[0];
 	        int maxIndex = 0;
@@ -72,12 +85,8 @@ public class Sorting {
 	        a[maxIndex] = a[endOfArrayIndex];
 	        a[endOfArrayIndex] = temp;
 	    }
-	    return true;
 	}
 	
-	/**
-	 * creates a List/array of N Integers
-	 */
 	private static void generate()
 	{
 		myList = new ArrayList<Integer>(N);
@@ -86,46 +95,53 @@ public class Sorting {
 		{
 			Random rand = new Random();
 			Integer r = rand.nextInt(200) - 100;
+			Integer r2 = rand.nextInt(200) - 100;
 			myList.add(r);
-			myArray[i] = r;
+			myArray[i] = r2;
 		}
 	}
-
-	/**
-	 * Prints the list and array pre sorted and each after the sort. 
-	 * Each row has 10 numbers, and each number is evenly spaced.
-	 * @param a: list of random Integers
-	 * @param b: array of random Integers
-	 * @param msg: Specifies list/array, type of sort, and pre/post sort
-	 * @throws Exception
-	 */
-	public static void print(List<Integer> a, Comparable[] b, String msg) throws Exception {
-		String filePath = "C:\\Users\\EMHolt\\Documents\\EmmaOutput.txt";
-
-		try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-			writer.println(msg);
-
-			writer.println("List:");
-			for (int i = 0; i < a.size(); i++) {
-				writer.printf("%4d", a.get(i));
-				if ((i + 1) % 10 == 0 || i == a.size() - 1) {
-					writer.println();
-				} else {
-					writer.print(", ");
-				}
+	
+	private static String arrayString(Object[] a)
+	{
+		String result = "";
+		for (int i = 0; i < a.length; i++)
+		{
+			result += a[i].toString();
+			if (i != a.length - 1)
+			{
+				result += ", ";
 			}
-
-			writer.println("Array:");
-			for (int i = 0; i < b.length; i++) {
-				writer.printf("%4d", b[i]);
-				if ((i + 1) % 10 == 0 || i == b.length - 1) {
-					writer.println();
-				} else {
-					writer.print(", ");
-				}
+			else
+			{
+				result += ".";
 			}
-			
-			writer.println();
+			if (i % 10 == 0 && i != 0)
+			{
+				result += "\n";
+			}
 		}
+		return result;
+	}
+	
+	private static String listString(List a)
+	{
+		String result = "";
+		for (int i = 0; i < a.size(); i++)
+		{
+			result += a.get(i).toString();
+			if (i != a.size() - 1)
+			{
+				result += ", ";
+			}
+			else
+			{
+				result += ".";
+			}
+			if (i % 10 == 0 && i != 0)
+			{
+				result += "\n";
+			}
+		}
+		return result;
 	}
 }
